@@ -15,6 +15,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RequestEmailSignup>((event, emit) async {
       emit(RegisterLoading());
       try {
+        // ignore: unused_local_variable
         final user = await repository.registerwithemail(
             event.email, event.password, event.username);
       } catch (e) {

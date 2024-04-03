@@ -49,7 +49,7 @@ class RegistrationScreen extends StatelessWidget {
                           TextFormField(
                               controller: state.usernmaeController,
                               decoration: InputDecoration(
-                                label: Text("Username"),
+                                label: const Text("Username"),
                                 labelStyle: Theme.of(context)
                                     .textTheme
                                     .labelMedium
@@ -69,7 +69,7 @@ class RegistrationScreen extends StatelessWidget {
                           TextFormField(
                               controller: state.passwordController,
                               decoration: InputDecoration(
-                                label: Text("Password"),
+                                label: const Text("Password"),
                                 labelStyle: Theme.of(context)
                                     .textTheme
                                     .labelMedium
@@ -89,7 +89,7 @@ class RegistrationScreen extends StatelessWidget {
                           TextFormField(
                               controller: state.emiailController,
                               decoration: InputDecoration(
-                                label: Text("Email Adrees"),
+                                label: const Text("Email Adrees"),
                                 labelStyle: Theme.of(context)
                                     .textTheme
                                     .labelMedium
@@ -116,7 +116,7 @@ class RegistrationScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Remeber Me"),
+                  const Text("Remeber Me"),
                   BlocBuilder<RememberSwitchCubit, RememberSwitchState>(
                     builder: (context, state) {
                       return Switch(
@@ -148,7 +148,8 @@ class RegistrationScreen extends StatelessWidget {
                           state.passwordController.text,
                           state.confirmPassword.text));
 
-                      return print("Validated");
+                      // ignore: avoid_print
+                      return context.goNamed(Routes.Home);
                     }
                   }
                 });
