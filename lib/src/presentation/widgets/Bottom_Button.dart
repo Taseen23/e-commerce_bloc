@@ -21,7 +21,7 @@ class BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.pushNamed(Routes.RegisterRoute),
+      onTap: onTap,
       child: Container(
         color:
             backgroundColor ?? Theme.of(context).colorScheme.onPrimaryContainer,

@@ -18,88 +18,91 @@ class SignUpScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
         appBar: AppBar(),
-        body: Column(
-          children: [
-            BlocConsumer<RegisterBloc, RegisterState>(
-              listener: (context, state) {
-                if (state is RegisterSuccess) {
-                  context.goNamed(Routes.Home);
-                }
-                if (state is RegisterFailed) {
-                  Fluttertoast.showToast(msg: state.massage);
-                }
-              },
-              builder: (context, state) {
-                if (state is RegisterInitial) {
-                  return Column(
-                    children: [
-                      TextField(
-                        controller: state.usernmaeController,
-                        decoration: InputDecoration(
-                          label: const Text("Username"),
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .outlineVariant),
-                          //  hintText: "Username",
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              BlocConsumer<RegisterBloc, RegisterState>(
+                listener: (context, state) {
+                  if (state is RegisterSuccess) {
+                    context.goNamed(Routes.Home);
+                  }
+                  if (state is RegisterFailed) {
+                    Fluttertoast.showToast(msg: state.massage);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is RegisterInitial) {
+                    return Column(
+                      children: [
+                        TextFormField(
+                          controller: state.usernmaeController,
+                          decoration: InputDecoration(
+                            label: const Text("Username"),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .outlineVariant),
+                            //  hintText: "Username",
+                          ),
                         ),
-                      ),
-                      Gap(20),
-                      TextField(
-                        controller: state.usernmaeController,
-                        decoration: InputDecoration(
-                          label: const Text("Email"),
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .outlineVariant),
-                          //  hintText: "Username",
+                        Gap(20),
+                        TextFormField(
+                          controller: state.emiailController,
+                          decoration: InputDecoration(
+                            label: const Text("Email"),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .outlineVariant),
+                            //  hintText: "Username",
+                          ),
                         ),
-                      ),
-                      Gap(20),
-                      TextField(
-                        controller: state.usernmaeController,
-                        decoration: InputDecoration(
-                          label: const Text("Password"),
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .outlineVariant),
-                          //  hintText: "Username",
+                        Gap(20),
+                        TextFormField(
+                          controller: state.passwordController,
+                          decoration: InputDecoration(
+                            label: const Text("Password"),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .outlineVariant),
+                            //  hintText: "Username",
+                          ),
                         ),
-                      ),
-                      Gap(20),
-                      TextField(
-                        controller: state.usernmaeController,
-                        decoration: InputDecoration(
-                          label: const Text("Confirm Password"),
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .outlineVariant),
-                          //  hintText: "Username",
+                        Gap(20),
+                        TextFormField(
+                          controller: state.confirmPassword,
+                          decoration: InputDecoration(
+                            label: const Text("Confirm Password"),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .outlineVariant),
+                            //  hintText: "Username",
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            )
-          ],
+                      ],
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              )
+            ],
+          ),
         ),
         bottomNavigationBar: BlocBuilder<RegisterBloc, RegisterState>(
           builder: ((context, state) {

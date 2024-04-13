@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface)),
                 TextButton(
-                    onPressed: () => context.pushNamed(Routes.LoginRoute),
+                    onPressed: () => context.pushNamed(Routes.SignupScreen),
                     child: Text("Signup",
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                             color: Theme.of(context).colorScheme.onSurface)))
@@ -73,7 +73,7 @@ class LoginScreen extends StatelessWidget {
             ),
             BottomButton(
               buttonText: "Sign Up",
-              onTap: () => context.pushNamed(Routes.RegisterRoute),
+              onTap: () => context.pushNamed(Routes.SignupScreen),
             )
           ],
         ));
