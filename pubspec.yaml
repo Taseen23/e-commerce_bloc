@@ -54,6 +54,7 @@ dependencies:
   cached_network_image: ^3.3.1
   shimmer_effect: ^1.0.4
   shimmer: ^3.0.0
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

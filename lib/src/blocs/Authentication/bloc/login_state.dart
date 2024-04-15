@@ -14,3 +14,11 @@ class LogingFail extends LoginState {
 
   LogingFail(this.massage);
 }
+
+class LogOutFailed extends LoginState {
+  final String massage;
+
+  LogOutFailed(this.massage);
+}
+
+class LogOutSuccess extends LoginState {}

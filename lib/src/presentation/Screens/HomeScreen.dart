@@ -1,9 +1,15 @@
+import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
 import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
+import 'package:e_commerce_bloc/src/routes/route_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../blocs/Authentication/bloc/bloc/brand_bloc.dart';
+import '../../utlls/asset_manager.dart';
 import '../widgets/Brand_Card.dart';
 import '../widgets/Search_bar.dart';
 
@@ -15,7 +21,30 @@ class HomeScreen extends StatelessWidget {
     final layout = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          BlocListener<LoginBloc, LoginState>(
+            listener: (context, state) {
+              if (state is LogOutSuccess) {
+                context.goNamed(Routes.LoginRoute);
+              }
+              if (state is LogOutFailed) {
+                Fluttertoast.showToast(msg: state.massage);
+              }
+
+              // TODO: implement listener
+            },
+            child: IconButton.filled(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStatePropertyAll(theme.colorScheme.surfaceVariant),
+              ),
+              onPressed: () => context.read<LoginBloc>().add(RequestSignOut()),
+              icon: const Icon(Icons.logout_rounded),
+            ),
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -55,6 +84,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const Gap(10),
+            /*
             SizedBox(
               height: layout.width * 0.13,
               child: BlocBuilder<BrandBloc, BrandState>(
@@ -87,6 +117,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
+            */
           ],
         ),
       ),

@@ -51,6 +51,10 @@ class AuthRepository {
     });
   }
 
+  Future<void> signoutUser() async {
+    await _auth.signOut();
+  }
+
   Future<User?> registerwithemail(
       String email, String password, String username) async {
     try {

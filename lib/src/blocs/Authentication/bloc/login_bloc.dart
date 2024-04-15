@@ -21,5 +21,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LogingFail(e.toString()));
       }
     });
+    on<RequestSignOut>((event, emit) async {
+      try {
+        await repository.signoutUser().then((value) => emit(LogOutSuccess()));
+      } catch (e) {
+        emit(LogOutFailed(e.toString()));
+      }
+    });
   }
 }
