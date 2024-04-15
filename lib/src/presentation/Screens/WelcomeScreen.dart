@@ -37,14 +37,14 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      FlutterSocialButton(
-                        onTap: () {},
-                        buttonType: ButtonType.facebook,
+                      SocialLoginButton(
+                        buttonType: SocialLoginButtonType.facebook,
+                        onPressed: () {},
                       ),
                       const Gap(10),
-                      FlutterSocialButton(
-                        onTap: () {},
-                        buttonType: ButtonType.twitter,
+                      SocialLoginButton(
+                        buttonType: SocialLoginButtonType.twitter,
+                        onPressed: () {},
                       ),
                       const Gap(10),
                       SocialLoginButton(
@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface)),
                 TextButton(
-                    onPressed: () => context.pushNamed(Routes.SignupScreen),
+                    onPressed: () => context.pushNamed(Routes.RegisterRoute),
                     child: Text("Signup",
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                             color: Theme.of(context).colorScheme.onSurface)))

@@ -23,12 +23,14 @@ class RegistrationScreen extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Column(
-            //   mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-
             children: [
-              Text("Sign Up",
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              Text("Welcome",
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface)),
+              Text("please enter your data to continue",
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurface)),
               const Gap(100),
               BlocConsumer<RegisterBloc, RegisterState>(
@@ -86,26 +88,6 @@ class RegistrationScreen extends StatelessWidget {
                                   return "Null";
                                 }
                               }),
-                          TextFormField(
-                              controller: state.emiailController,
-                              decoration: InputDecoration(
-                                label: const Text("Email Adrees"),
-                                labelStyle: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .outlineVariant),
-                                //   hintText: "Email Adrees",
-                              ),
-                              validator: (value) {
-                                if (value == " " || value == null) {
-                                  return "Email is required";
-                                } else {
-                                  return "Null";
-                                }
-                              }),
                         ],
                       ));
                 } else {
@@ -134,7 +116,7 @@ class RegistrationScreen extends StatelessWidget {
         bottomNavigationBar: BlocBuilder<RegisterBloc, RegisterState>(
           builder: ((context, state) {
             return BottomButton(
-                buttonText: "Create An Account",
+                buttonText: "Login",
                 buttonchild: state is RegisterLoading
                     ? LoadingAnimationWidget.discreteCircle(
                         color: theme.colorScheme.onPrimaryContainer, size: 35.w)
