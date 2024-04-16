@@ -29,5 +29,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LogOutFailed(e.toString()));
       }
     });
+    on<RequestEmailLogin>((event, emit) async {
+      debugPrint(
+          "Email: ${event.email}, Password: ${event.password}, Remember: ${event.isRemember}");
+      try {
+        await repository
+            .signinwithEmail(event.email, event.password)
+            .then((value) => emit(LogingSuccess()));
+      } catch (e) {
+        emit(LogingFail(e.toString()));
+      }
+    });
   }
 }

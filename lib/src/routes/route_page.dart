@@ -1,4 +1,3 @@
-import 'package:e_commerce_bloc/src/presentation/Screens/WelcomeScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/SignInScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/SignUpScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/SplashScreen.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../presentation/Screens/HomeScreen.dart';
+import '../presentation/Screens/WelcomeScreen.dart';
 
 part 'routes.dart';
 
@@ -17,15 +17,15 @@ class RoutePages {
       pageBuilder: (context, state) => const MaterialPage(child: HomeScreen()),
     ),
     GoRoute(
-      path: Routes.LoginRoute,
-      name: Routes.LoginRoute,
-      pageBuilder: (context, state) => const MaterialPage(child: LoginScreen()),
+      path: Routes.LoginScreen,
+      name: Routes.LoginScreen,
+      pageBuilder: (context, state) => MaterialPage(child: LoginScreen()),
     ),
     GoRoute(
-      path: Routes.RegisterRoute,
-      name: Routes.RegisterRoute,
+      path: Routes.WelcomeScreen,
+      name: Routes.WelcomeScreen,
       pageBuilder: (context, state) =>
-          const MaterialPage(child: RegistrationScreen()),
+          const MaterialPage(child: WelcomeScreen()),
     ),
     GoRoute(
       path: Routes.SplashScreen,

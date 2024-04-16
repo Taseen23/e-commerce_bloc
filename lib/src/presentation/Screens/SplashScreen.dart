@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
       body: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
           if (state is SplashEnd) {
-            context.goNamed(Routes.LoginRoute);
+            context.goNamed(Routes.WelcomeScreen);
           }
         },
         child: Center(

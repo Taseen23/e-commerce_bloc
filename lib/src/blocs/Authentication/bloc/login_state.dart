@@ -7,11 +7,10 @@ sealed class LoginState extends Equatable {
 }
 
 final class LoginInitial extends LoginState {
-  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
+  final TextEditingController emiailController = TextEditingController();
   @override
-  List<Object?> get props => [emailController, passwordController];
+  List<Object?> get props => [passwordController, emiailController];
 }
 
 class LogingLoading extends LoginState {}

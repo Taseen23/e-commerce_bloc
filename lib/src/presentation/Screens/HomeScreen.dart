@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
           BlocListener<LoginBloc, LoginState>(
             listener: (context, state) {
               if (state is LogOutSuccess) {
-                context.goNamed(Routes.LoginRoute);
+                context.goNamed(Routes.WelcomeScreen);
               }
               if (state is LogOutFailed) {
                 Fluttertoast.showToast(msg: state.massage);
