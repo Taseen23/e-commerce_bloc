@@ -1,9 +1,18 @@
 part of 'login_bloc.dart';
 
 @immutable
-sealed class LoginState {}
+sealed class LoginState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
-final class LoginInitial extends LoginState {}
+final class LoginInitial extends LoginState {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  List<Object?> get props => [emailController, passwordController];
+}
 
 class LogingLoading extends LoginState {}
 

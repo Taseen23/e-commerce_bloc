@@ -1,3 +1,4 @@
+import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/register_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/cubit/remember_switch_cubit.dart';
 import 'package:e_commerce_bloc/src/presentation/widgets/Bottom_Button.dart';
@@ -17,11 +18,11 @@ class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final Formkey = GlobalKey<FormState>();
+    final formkey = GlobalKey<FormState>();
     return Scaffold(
         appBar: AppBar(),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -33,25 +34,24 @@ class RegistrationScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurface)),
               const Gap(100),
-              BlocConsumer<RegisterBloc, RegisterState>(
-                  listener: (context, state) {
-                if (state is RegisterSuccess) {
+              BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
+                if (state is LogingSuccess) {
                   context.goNamed(Routes.Home);
                 }
-                if (state is RegisterFailed) {
+                if (state is LogingFail) {
                   Fluttertoast.showToast(msg: state.massage);
                 }
               }, builder: (context, state) {
-                if (state is RegisterInitial) {
+                if (state is LoginInitial) {
                   return Form(
-                      key: Formkey,
+                      key: formkey,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           TextFormField(
-                              controller: state.usernmaeController,
+                              controller: state.emailController,
                               decoration: InputDecoration(
-                                label: const Text("Username"),
+                                label: const Text("Email"),
                                 labelStyle: Theme.of(context)
                                     .textTheme
                                     .labelMedium
@@ -105,7 +105,7 @@ class RegistrationScreen extends StatelessWidget {
                           value: state is SwithChanged ? state.value : true,
                           onChanged: (value) => context
                               .read<RememberSwitchCubit>()
-                              .switchtoggle(value));
+                              .switchToggle(value));
                     },
                   )
                 ],
@@ -113,7 +113,7 @@ class RegistrationScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: BlocBuilder<RegisterBloc, RegisterState>(
+        bottomNavigationBar: BlocBuilder<LoginBloc, LoginState>(
           builder: ((context, state) {
             return BottomButton(
                 buttonText: "Login",
@@ -122,13 +122,12 @@ class RegistrationScreen extends StatelessWidget {
                         color: theme.colorScheme.onPrimaryContainer, size: 35.w)
                     : null,
                 onTap: () {
-                  if (state is RegisterInitial) {
-                    if (Formkey.currentState!.validate()) {
-                      context.read<RegisterBloc>().add(RequestEmailSignup(
-                          state.usernmaeController.text,
-                          state.emiailController.text,
-                          state.passwordController.text,
-                          state.confirmPassword.text));
+                  if (state is LoginInitial) {
+                    if (formkey.currentState!.validate()) {
+                      context.read<LoginBloc>().add(RequestEmailLogin(
+                          email: state.emailController.text,
+                          password: state.passwordController.text,
+                          isRemember: RememberSwitchCubit.isRemember));
 
                       // ignore: avoid_print
                       return context.goNamed(Routes.Home);

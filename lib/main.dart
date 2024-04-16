@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'app.dart';
 import 'src/blocs/blocs.dart';
+import 'src/data/preference/local_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,5 +14,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Bloc.observer = BlocEcommerceObserver();
+  await LocalPreferences().init();
   runApp(const EcommerceApp());
 }

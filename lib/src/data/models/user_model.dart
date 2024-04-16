@@ -7,10 +7,14 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 class UserModel {
   final String? userName;
   final String? email;
+  final String? password;
+  final String? confirmPassword;
 
   UserModel({
     this.userName,
     this.email,
+    this.password,
+    this.confirmPassword,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(

@@ -1,16 +1,13 @@
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
-import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
 import 'package:e_commerce_bloc/src/routes/route_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../blocs/Authentication/bloc/bloc/brand_bloc.dart';
-import '../../utlls/asset_manager.dart';
-import '../widgets/Brand_Card.dart';
+import '../../data/preference/local_preferences.dart';
+import '../../utlls/values.dart';
 import '../widgets/Search_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,7 +15,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final layout = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -50,19 +46,15 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Hello Taseen",
-              style: Theme.of(context)
+            ListTile(
+              title: Text(
+                  '${Values.GREETINGS} ${LocalPreferences.getString('username')}'),
+              titleTextStyle: Theme.of(context)
                   .textTheme
                   .titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "Welcome to laza",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: Theme.of(context).colorScheme.outline),
+              subtitle: const Text(Values.WELCOME_SUB_TITLE),
+              subtitleTextStyle: Theme.of(context).textTheme.labelMedium,
             ),
             const CustomSearchBar(),
             const Gap(20),

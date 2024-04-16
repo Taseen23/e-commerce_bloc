@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_bloc/src/data/models/user_model.dart';
+import 'package:e_commerce_bloc/src/data/preference/local_preferences.dart';
+import 'package:e_commerce_bloc/src/utlls/asset_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -39,7 +41,10 @@ class AuthRepository {
     }
   }
 
-  Future<void> createUserinDB(User user, String? username) async {
+  Future<void> createUserinDB(
+    User user,
+    String? username,
+  ) async {
     final data =
         UserModel(userName: user.displayName ?? username, email: user.email);
     await _firestore
@@ -49,6 +54,11 @@ class AuthRepository {
         .then((value) {
       debugPrint("user inserted ${user.uid}");
     });
+    LocalPreferences.setString(
+        'username', user.displayName ?? username ?? 'unknown');
+    LocalPreferences.setString('email', user.email ?? '');
+    LocalPreferences.setString(
+        'photourl', user.photoURL ?? AssetManager.SEARCH_ICON);
   }
 
   Future<void> signoutUser() async {
@@ -67,6 +77,24 @@ class AuthRepository {
       }
       return user;
     } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<User?> signInWithEmail(String email, String password) async {
+    try {
+      final userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      final user = userCredential.user;
+      LocalPreferences.setString('username', user?.displayName ?? 'Unknown');
+      LocalPreferences.setString('email', user?.email ?? '');
+      LocalPreferences.setString(
+          'photoUrl', user?.photoURL ?? AssetManager.SEARCH_ICON);
+      LocalPreferences.setString('phoneNumber', user?.phoneNumber ?? '');
+
+      return user;
+    } catch (e) {
+      debugPrint('Error: $e');
       throw Exception(e);
     }
   }

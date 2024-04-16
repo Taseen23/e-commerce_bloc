@@ -1,6 +1,7 @@
-import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/bloc/brand_bloc.dart';
+import 'package:e_commerce_bloc/src/blocs/Brand/brand_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/register_bloc.dart';
+import 'package:e_commerce_bloc/src/blocs/Profile/bloc/profile_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/cubit/remember_switch_cubit.dart';
 import 'package:e_commerce_bloc/src/blocs/cubit/splash_cubit.dart';
 import 'package:e_commerce_bloc/src/data/repository/authrepository.dart';
@@ -38,6 +39,9 @@ class EcommerceApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => BrandBloc(context.read<StoreRepository>()),
+              ),
+              BlocProvider(
+                create: (context) => ProfileBloc(),
               )
             ],
             child: ScreenUtilInit(
