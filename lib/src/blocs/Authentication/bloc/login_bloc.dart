@@ -9,12 +9,12 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository repository;
   LoginBloc(this.repository) : super(LoginInitial()) {
-    on<RequestGoogleLogin>((event, emit) async {
+    /* on<RequestGoogleLogin>((event, emit) async {
       // funtion for google login
       try {
         emit(LogingLoading());
 
-        final user = await repository.signInWithGoogle();
+        final user = await repository.signinwithEmail(email);
         debugPrint("User : ${user?.displayName}");
         emit(LogingSuccess());
       } catch (e) {
@@ -22,6 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LogingFail(e.toString()));
       }
     });
+    */
     on<RequestSignOut>((event, emit) async {
       try {
         await repository.signoutUser().then((value) => emit(LogOutSuccess()));
