@@ -1,4 +1,4 @@
-import 'package:e_commerce_bloc/src/presentation/Screens/SignInScreen.dart';
+import 'package:e_commerce_bloc/src/presentation/Screens/LoginScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/SignUpScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/SplashScreen.dart';
 import 'package:flutter/material.dart';
