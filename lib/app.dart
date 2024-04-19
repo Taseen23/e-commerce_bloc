@@ -38,8 +38,9 @@ class EcommerceApp extends StatelessWidget {
                 create: (context) => LoginBloc(context.read<AuthRepository>()),
               ),
               BlocProvider(
-                create: (context) => BrandBloc(context.read<StoreRepository>()),
-              ),
+                  create: (context) =>
+                      BrandBloc(context.read<StoreRepository>())
+                        ..add(FetchBrands())),
               BlocProvider(
                 create: (context) => ProfileBloc(),
               )

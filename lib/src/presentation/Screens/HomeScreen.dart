@@ -1,4 +1,5 @@
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
+import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
 import 'package:e_commerce_bloc/src/routes/route_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../blocs/Brand/brand_bloc.dart';
 import '../../data/preference/local_preferences.dart';
 import '../../utlls/values.dart';
 import '../widgets/Search_bar.dart';
@@ -15,6 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final layout = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -76,7 +79,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const Gap(10),
-            /*
             SizedBox(
               height: layout.width * 0.13,
               child: BlocBuilder<BrandBloc, BrandState>(
@@ -109,7 +111,6 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
-            */
           ],
         ),
       ),

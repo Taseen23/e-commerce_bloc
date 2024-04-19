@@ -57,7 +57,7 @@ class AuthRepository {
       debugPrint("user inserted ${user.uid}");
     });
     LocalPreferences.setString('username', user.displayName ?? username ?? " ");
-    LocalPreferences.setString('username', user.email ?? " ");
+    // LocalPreferences.setString('email', user.email ?? " ");
   }
 
   Future<void> signoutUser() async {
@@ -86,7 +86,7 @@ class AuthRepository {
           email: email, password: Password);
       final user = UserCredential.user;
       LocalPreferences.setString('username', user?.displayName ?? " ");
-      LocalPreferences.setString('username', user?.email ?? " ");
+      // LocalPreferences.setString('username', user?.email ?? " ");
     } catch (e) {
       throw Exception(e);
     }
