@@ -6,11 +6,8 @@ part 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(SplashInitial());
-  StoreRepository repository = StoreRepository();
 
-  Future<void> startSplash() async {
-    repository.createNewBrand();
-
+  void startSplash() {
     Future.delayed(const Duration(seconds: 2), () {
       emit(SplashEnd());
     });

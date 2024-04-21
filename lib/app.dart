@@ -20,7 +20,8 @@ class EcommerceApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
         providers: [
-          RepositoryProvider(create: ((context) => AuthRepository()))
+          RepositoryProvider(create: ((context) => AuthRepository())),
+          RepositoryProvider(create: ((context) => StoreRepository()))
         ],
         child: MultiBlocProvider(
             providers: [

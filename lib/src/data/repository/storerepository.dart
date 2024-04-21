@@ -17,6 +17,10 @@ class StoreRepository {
     }
   }
 
+  Future<void> fethcBrands() async {
+    final brandsSnapshot = await _firestore.collection("brands").get();
+  }
+
   Future<List<BrandModel>> fetchBrands() async {
     final List<BrandModel> brandList = [];
     final brandsSnapshot = await _firestore.collection("brands").get();
