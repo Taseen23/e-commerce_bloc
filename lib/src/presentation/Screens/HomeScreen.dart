@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
 import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
 import 'package:e_commerce_bloc/src/routes/route_page.dart';
@@ -79,38 +80,62 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const Gap(10),
-            SizedBox(
-              height: layout.width * 0.13,
-              child: BlocBuilder<BrandBloc, BrandState>(
-                builder: (context, state) {
-                  if (state is BrandFetchSuccess) {
-                    return ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return const Gap(10);
-                        }
-                        return BrandCard(
-                          brandLogo: state.brands[index - 1].brandLogo,
-                          brandTitle: state.brands[index - 1].brandName,
-                        );
-                      },
-                      separatorBuilder: (context, index) => const Gap(8.0),
-                      itemCount: state.brands.length + 1,
-                    );
-                  } else {
-                    return ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          ShimmerEffect.rectangular(
-                              width: 70, height: layout.width * 0.13),
-                      separatorBuilder: (context, index) => const Gap(8.0),
-                      itemCount: 10,
-                    );
+            StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection("brands").snapshots(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
                   }
-                },
-              ),
-            ),
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final brand = snapshot.data!.docs[index];
+                      return Text("brand[brand_name]");
+                    },
+                    // separatorBuilder: (context, index) => const Gap(8.0),
+                    // itemCount: state.brands.length + 1,
+                  );
+                })
+            // SizedBox(
+            //   height: layout.width * 0.13,
+            //   child: BlocBuilder<BrandBloc, BrandState>(
+            //     builder: (context, state) {
+            //       if (state is BrandFetchSuccess) {
+            //         return ListView.builder(
+            //           scrollDirection: Axis.horizontal,
+            //           itemBuilder: (context, index) {
+            //             return BrandCard(
+            //                 brandTitle: state.brands.length.toString(),
+            //                 brandLogo: state.brands.length.toString());
+            //             // if (index == 0) {
+            //             //   return const Gap(10);
+            //             // }
+            //             // return BrandCard(
+            //             //   brandLogo: state.brands[index - 1].brandLogo,
+            //             //   brandTitle: state.brands[index - 1].brandName,
+            //             // );
+            //           },
+            //           // separatorBuilder: (context, index) => const Gap(8.0),
+            //           // itemCount: state.brands.length + 1,
+            //         );
+            //       } else
+            //         (e) {
+            //           return Text(state.toString());
+            //           // return ListView.separated(
+            //           //   scrollDirection: Axis.horizontal,
+            //           //   itemBuilder: (context, index) =>
+            //           //       ShimmerEffect.rectangular(
+            //           //           width: 70, height: layout.width * 0.13),
+            //           //   separatorBuilder: (context, index) => const Gap(8.0),
+            //           //   itemCount: 2,
+            //           // );
+            //         };
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

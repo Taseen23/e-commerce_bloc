@@ -42,9 +42,6 @@ class EcommerceApp extends StatelessWidget {
                   create: (context) =>
                       BrandBloc(context.read<StoreRepository>())
                         ..add(FetchBrands())),
-              BlocProvider(
-                create: (context) => ProfileBloc(),
-              )
             ],
             child: ScreenUtilInit(
               designSize: const Size(360, 690),

@@ -6,11 +6,11 @@ class BrandCard extends StatelessWidget {
   const BrandCard({
     super.key,
     required this.brandTitle,
-    required this.brandLogo,
+    // required this.brandLogo,
   });
 
   final String brandTitle;
-  final String brandLogo;
+  // final String brandLogo;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class BrandCard extends StatelessWidget {
           color: theme.colorScheme.surfaceVariant),
       child: Row(
         children: [
-          CachedNetworkImage(imageUrl: brandLogo),
+          // CachedNetworkImage(imageUrl: brandLogo),
           const Gap(7.0),
           Text(
             brandTitle,
