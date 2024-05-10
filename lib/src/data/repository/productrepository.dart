@@ -5,8 +5,8 @@ import 'package:e_commerce_bloc/src/data/models/products_model.dart';
 
 class ProductRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final List<ProductModel> products = [];
   Future<List<ProductModel>> fetchProducts() async {
-    final List<ProductModel> products = [];
     try {
       final data = await _firestore.collection('products').get();
       for (var product in data.docs) {

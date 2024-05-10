@@ -1,4 +1,3 @@
-import 'package:e_commerce_bloc/src/blocs/Brand/brand_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/register_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/Profile/bloc/profile_bloc.dart';
@@ -38,10 +37,6 @@ class EcommerceApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => LoginBloc(context.read<AuthRepository>()),
               ),
-              BlocProvider(
-                  create: (context) =>
-                      BrandBloc(context.read<StoreRepository>())
-                        ..add(FetchBrands())),
             ],
             child: ScreenUtilInit(
               designSize: const Size(360, 690),

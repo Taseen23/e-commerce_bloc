@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
+import 'package:e_commerce_bloc/src/data/repository/proudctrepo2.dart';
+
 import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
 import 'package:e_commerce_bloc/src/routes/route_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../blocs/Brand/brand_bloc.dart';
 import '../../data/preference/local_preferences.dart';
+import '../../data/repository/productrepository.dart';
 import '../../utlls/values.dart';
 import '../widgets/Search_bar.dart';
 
@@ -80,25 +83,63 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const Gap(10),
-            StreamBuilder(
-                stream:
-                    FirebaseFirestore.instance.collection("brands").snapshots(),
+            // StreamBuilder(
+            //     stream:
+            //         FirebaseFirestore.instance.collection("brands").snapshots(),
+            //     builder: (ctx, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.waiting) {
+            //         return Center(child: CircularProgressIndicator());
+            //       }
+            //       return ListView.builder(
+            //         itemCount: snapshot.data!.docs.length,
+
+            //         scrollDirection: Axis.horizontal,
+            //         itemBuilder: (context, index) {
+            //           final brand = snapshot.data!.docs[index];
+            //           return Text(brand["brand_logo"]);
+            //         },
+            //         // separatorBuilder: (context, index) => const Gap(8.0),
+            //         // itemCount: state.brands.length + 1,
+            //       );
+            //     }),
+
+            FutureBuilder(
+                future: getproducs(),
                 builder: (ctx, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
-                  return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      final brand = snapshot.data!.docs[index];
-                      return Text("brand[brand_name]");
-                    },
-                    // separatorBuilder: (context, index) => const Gap(8.0),
-                    // itemCount: state.brands.length + 1,
-                  );
+                  return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (_, index) {
+                        final data = snapshot.data![index];
+                        return Image.network(data.productName.toString());
+                      });
                 })
+            // StreamBuilder(
+            //     stream: FirebaseFirestore.instance
+            //         .collection("products")
+            //         .snapshots(),
+            //     builder: ((context, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.waiting) {
+            //         return Center(child: CircularProgressIndicator());
+            //       }
+            //       return GridView.builder(
+            //           gridDelegate:
+            //               const SliverGridDelegateWithFixedCrossAxisCount(
+            //                   crossAxisCount: 2),
+            //           itemCount: snapshot.data!.docs.length,
+            //           itemBuilder: (_, index) {
+            //             final data = snapshot.data!.docs[index];
+            //             return Image.network(data["image"]);
+            //           });
+            //     }))
+
             // SizedBox(
             //   height: layout.width * 0.13,
             //   child: BlocBuilder<BrandBloc, BrandState>(

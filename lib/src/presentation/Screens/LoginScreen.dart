@@ -88,25 +88,25 @@ class LoginScreen extends StatelessWidget {
               },
             ),
             const Gap(20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Remember Me',
-                  style: theme.textTheme.labelMedium,
-                ),
-                BlocBuilder<RememberSwitchCubit, RememberSwitchState>(
-                  builder: (context, state) {
-                    return Switch(
-                      value: state is SwithChanged ? state.value : true,
-                      onChanged: (value) => context
-                          .read<RememberSwitchCubit>()
-                          .switchToggle(value),
-                    );
-                  },
-                )
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text(
+            //       'Remember Me',
+            //       style: theme.textTheme.labelMedium,
+            //     ),
+            //     BlocBuilder<RememberSwitchCubit, RememberSwitchState>(
+            //       builder: (context, state) {
+            //         return Switch(
+            //           value: state is SwithChanged ? state.value : true,
+            //           onChanged: (value) => context
+            //               .read<RememberSwitchCubit>()
+            //               .switchToggle(value),
+            //         );
+            //       },
+            //     )
+            //   ],
+            // ),
           ],
         ),
       ),
