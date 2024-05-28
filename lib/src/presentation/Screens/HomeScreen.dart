@@ -103,24 +103,24 @@ class HomeScreen extends StatelessWidget {
             //       );
             //     }),
 
-            FutureBuilder(
-                future: getproducs(),
-                builder: (ctx, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (_, index) {
-                        final data = snapshot.data![index];
-                        return Image.network(data.productName.toString());
-                      });
-                })
+            // FutureBuilder(
+            //     future: getproducs(),
+            //     builder: (ctx, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.waiting) {
+            //         return Center(
+            //           child: CircularProgressIndicator(),
+            //         );
+            //       }
+            //       return GridView.builder(
+            //           gridDelegate:
+            //               const SliverGridDelegateWithFixedCrossAxisCount(
+            //                   crossAxisCount: 2),
+            //           itemCount: snapshot.data!.length,
+            //           itemBuilder: (_, index) {
+            //             final data = snapshot.data![index];
+            //             return Image.network(data.productName.toString());
+            //           });
+            //     })
             // StreamBuilder(
             //     stream: FirebaseFirestore.instance
             //         .collection("products")

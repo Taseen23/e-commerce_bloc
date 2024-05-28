@@ -31,8 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     });
     on<RequestEmailLogin>((event, emit) async {
-      debugPrint(
-          "Email: ${event.email}, Password: ${event.password}, Remember: ${event.isRemember}");
+      debugPrint("Email: ${event.email}, Password: ${event.password}");
       try {
         await repository
             .signinwithEmail(event.email, event.password)

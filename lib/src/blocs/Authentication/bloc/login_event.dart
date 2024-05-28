@@ -10,10 +10,10 @@ class RequestSignOut extends LoginEvent {}
 class RequestEmailLogin extends LoginEvent {
   final String email;
   final String password;
-  final bool isRemember;
+  // final bool isRemember;
   RequestEmailLogin({
     required this.email,
     required this.password,
-    required this.isRemember,
+    // required this.isRemember,
   });
 }

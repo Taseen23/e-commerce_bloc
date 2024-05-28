@@ -39,7 +39,8 @@ class LoginScreen extends StatelessWidget {
                 }
 
                 if (state is LogingFail) {
-                  Fluttertoast.showToast(msg: state.massage);
+                  context.goNamed(Routes.Home);
+                  //Fluttertoast.showToast(msg: state.massage);
                 }
               },
               builder: (context, state) {
@@ -146,9 +147,10 @@ class LoginScreen extends StatelessWidget {
                   if (state is LoginInitial) {
                     if (formKey.currentState!.validate()) {
                       context.read<LoginBloc>().add(RequestEmailLogin(
-                          email: state.emiailController.text,
-                          password: state.passwordController.text,
-                          isRemember: RememberSwitchCubit.isRemember));
+                            email: state.emiailController.text,
+                            password: state.passwordController.text,
+                            // isRemember: RememberSwitchCubit.isRemember
+                          ));
                     }
                   }
                 },

@@ -14,23 +14,23 @@ part 'routes.dart';
 class RoutePages {
   static final authService = AuthService();
   static final ROUTER = GoRouter(
-      redirect: (context, state) {
-        if (authService.checkLoginStatus()) {
-          if (state.fullPath == Routes.LoginScreen ||
-              state.fullPath == Routes.SignupScreen ||
-              state.fullPath == Routes.WelcomeScreen) {
-            return Routes.Home;
-          } else {
-            return state.fullPath;
-          }
-        } else {
-          if (state.fullPath == Routes.LoginScreen ||
-              state.fullPath == Routes.SignupScreen) {
-            return state.fullPath;
-          }
-          return Routes.WelcomeScreen;
-        }
-      },
+      // redirect: (context, state) {
+      //   if (authService.checkLoginStatus()) {
+      //     if (state.fullPath == Routes.LoginScreen ||
+      //         state.fullPath == Routes.SignupScreen ||
+      //         state.fullPath == Routes.WelcomeScreen) {
+      //       return Routes.Home;
+      //     } else {
+      //       return state.fullPath;
+      //     }
+      //   } else {
+      //     if (state.fullPath == Routes.LoginScreen ||
+      //         state.fullPath == Routes.SignupScreen) {
+      //       return state.fullPath;
+      //     }
+      //     return Routes.WelcomeScreen;
+      //   }
+      // },
       routes: [
         GoRoute(
           path: Routes.Home,
