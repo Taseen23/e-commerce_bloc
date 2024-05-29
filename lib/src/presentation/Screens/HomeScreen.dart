@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
 import 'package:e_commerce_bloc/src/data/repository/proudctrepo2.dart';
+import 'package:e_commerce_bloc/src/presentation/Screens/Sreens.dart';
 
 import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
 import 'package:e_commerce_bloc/src/routes/route_page.dart';
@@ -73,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Choose Brand',
+                    'Choose Brands',
                     style: theme.textTheme.titleMedium
                         ?.copyWith(fontWeight: FontWeight.w600),
                   ),
@@ -110,38 +111,55 @@ class HomeScreen extends StatelessWidget {
             //       }),
             // ),
 
-            FutureBuilder(
-              future: getproducts(),
-              builder: (ctx, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+            Expanded(
+              child: FutureBuilder(
+                future: getproducts(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  }
 
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(
-                    child: Text('No products found'),
-                  );
-                }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Text('No products found'),
+                    );
+                  }
 
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (_, index) {
-                    final data = snapshot.data![index];
-                    return Image.network(data.image.toString());
-                  },
-                );
-              },
+                  return GridView.builder(
+                    padding: EdgeInsets.all(20),
+                    scrollDirection: Axis.vertical,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (_, index) {
+                      final products = snapshot.data![index];
+                      return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => ProductDetails(
+                                          pdetails: products.name.toString(),
+                                        ))));
+                          },
+                          child: Image.network(
+                            products.image.toString(),
+                            semanticLabel: "taseen",
+                          ));
+                    },
+                  );
+                },
+              ),
             )
             // StreamBuilder(
             //     stream: FirebaseFirestore.instance
