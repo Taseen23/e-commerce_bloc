@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
 import 'package:e_commerce_bloc/src/data/repository/proudctrepo2.dart';
+import 'package:e_commerce_bloc/src/presentation/Screens/Sreens.dart';
 
 import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
 import 'package:e_commerce_bloc/src/routes/route_page.dart';
@@ -110,38 +111,48 @@ class HomeScreen extends StatelessWidget {
             //       }),
             // ),
 
-            FutureBuilder(
-              future: getproducts(),
-              builder: (ctx, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+            Expanded(
+              child: FutureBuilder(
+                future: getproduct(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  }
 
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(
-                    child: Text('No products found'),
-                  );
-                }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Text('No products found'),
+                    );
+                  }
 
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (_, index) {
-                    final data = snapshot.data![index];
-                    return Image.network(data.image.toString());
-                  },
-                );
-              },
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (_, index) {
+                      final data = snapshot.data![index];
+                      return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductsDetails()));
+                          },
+                          child: Text(data.productName.toString()));
+                    },
+                  );
+                },
+              ),
             )
             // StreamBuilder(
             //     stream: FirebaseFirestore.instance

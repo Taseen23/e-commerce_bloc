@@ -21,3 +21,20 @@ Future<List<ImageModel>?> getproducts() async {
 
   // print(data.docs.length.toString());
 }
+
+Future<List<ProductModel>?> getproduct() async {
+  final List<ProductModel> products = [];
+  // final data = await FirebaseFirestore.instance.collection('products').get();
+  try {
+    final data = await FirebaseFirestore.instance.collection('products').get();
+    for (var product in data.docs) {
+      products.add(ProductModel.fromJson(product.data()));
+    }
+
+    return products;
+  } catch (e) {
+    return null;
+  }
+
+  // print(data.docs.length.toString());
+}
