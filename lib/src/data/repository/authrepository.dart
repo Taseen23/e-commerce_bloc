@@ -44,20 +44,14 @@ class AuthRepository {
   */
 
   Future<void> createUserinDB(
-      User user, String? username, String password) async {
-    final data = UserModel(
-        userName: user.displayName ?? username,
-        email: user.email,
-        password: username ?? password);
-    await _firestore
-        .collection("Users")
-        .doc(user.uid)
-        .set(data.toJson())
-        .then((value) {
-      debugPrint("user inserted ${user.uid}");
+      String username, String password, String email) async {
+    final data =
+        UserModel(userName: username, email: email, password: password);
+    await _firestore.collection("Users").doc().set(data.toJson()).then((value) {
+      debugPrint("user inserted ${email}");
     });
-    LocalPreferences.setString('username', user.displayName ?? username ?? " ");
-    // LocalPreferences.setString('email', user.email ?? " ");
+    LocalPreferences.setString('username', username ?? " ");
+    LocalPreferences.setString('email', email ?? " ");
   }
 
   Future<void> signoutUser() async {
@@ -72,7 +66,7 @@ class AuthRepository {
 
       final user = credential.user;
       if (user != null) {
-        await createUserinDB(user, username, password);
+        await createUserinDB(username, password, email);
       }
       return user;
     } catch (e) {
@@ -86,7 +80,8 @@ class AuthRepository {
           email: email, password: Password);
       final user = UserCredential.user;
       LocalPreferences.setString('username', user?.displayName ?? " ");
-      // LocalPreferences.setString('username', user?.email ?? " ");
+      LocalPreferences.setString('username', user?.email ?? " ");
+      return user;
     } catch (e) {
       throw Exception(e);
     }

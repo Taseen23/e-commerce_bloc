@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-                  '${Values.GREETINGS} ${LocalPreferences.getString('username')}'),
+                  '${Values.GREETINGS} ${LocalPreferences.getString('email')}'),
               titleTextStyle: Theme.of(context)
                   .textTheme
                   .titleLarge

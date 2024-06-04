@@ -16,7 +16,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(RegisterLoading());
       try {
         // ignore: unused_local_variable
-        final user = await repository.registerwithemail(
+        final user = await repository.createUserinDB(
             event.email, event.password, event.username);
       } catch (e) {
         emit(RegisterFailed(massage: e.toString()));

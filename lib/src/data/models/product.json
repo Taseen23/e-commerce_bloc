@@ -1,10 +1,10 @@
 {
-    "product_name":"",
-    "product_price":"",
+    "product_name":"SaRa Men's Slim Fit Casual Shirt",
+    "product_price":"Tk 1990",
     "image_gallery": [
         {
             "title":"",
-            "url":""
+            "url":"https://www.google.com/search?q=tshhirtpicture&oq=tshhirtpicture&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIJCAEQABgNGIAEMgkIAhAAGA0YgAQyCQgDEAAYDRiABDIJCAQQABgNGIAEMgkIBRAAGA0YgAQyCQgGEAAYDRiABDIJCAcQABgNGIAEMgkICBAAGA0YgAQyCQgJEAAYDRiABNIBCDgxMjZqMGo3qAIIsAIB&sourceid=chrome&ie=UTF-8#vhid=8HPfymhnnFnahM&vssid=l"
         },
         {
             "title":"",
@@ -27,6 +27,6 @@
             ]
         }
     ],
-    "product_details": "",
+    "product_details": "SaRa Men's Slim Fit Casual Shirt",
     "brand": ""
 }
