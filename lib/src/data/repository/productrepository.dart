@@ -18,12 +18,12 @@ class ProductRepository {
     }
   }
 
-  final List<ImageModel> products = [];
-  Future<List<ImageModel>> fetchProducts() async {
+  final List<ProductModel> products = [];
+  Future<List<ProductModel>> fetchProducts() async {
     try {
       final data = await _firestore.collection('products').get();
       for (var product in data.docs) {
-        products.add(ImageModel.fromJson(product.data()));
+        products.add(ProductModel.fromJson(product.data()));
       }
       return products;
     } catch (e) {

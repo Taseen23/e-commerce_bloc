@@ -24,6 +24,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProductRepository obj = ProductRepository();
     final layout = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
@@ -74,142 +75,61 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Choose Brands',
+                    'Choose Products',
                     style: theme.textTheme.titleMedium
                         ?.copyWith(fontWeight: FontWeight.w600),
                   ),
                   Text(
-                    'View All',
+                    'Filter',
                     style: theme.textTheme.labelSmall,
                   )
                 ],
               ),
             ),
             const Gap(10),
-            // SizedBox(
-            //   height: layout.width * 0.13,
-            //   child:
-            //   StreamBuilder(
-            //       stream: FirebaseFirestore.instance
-            //           .collection("brands")
-            //           .snapshots(),
-            //       builder: (ctx, snapshot) {
-            //         if (snapshot.connectionState == ConnectionState.waiting) {
-            //           return Center(child: CircularProgressIndicator());
-            //         }
-            //         return ListView.builder(
-            //           itemCount: snapshot.data!.docs.length,
+            FutureBuilder(
+              future: obj.fetchProducts(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-            //           scrollDirection: Axis.horizontal,
-            //           itemBuilder: (context, index) {
-            //             final brand = snapshot.data!.docs[index];
-            //             return Text(brand["brand_logo"]);
-            //           },
-            //           // separatorBuilder: (context, index) => const Gap(8.0),
-            //           // itemCount: state.brands.length + 1,
-            //         );
-            //       }),
-            // ),
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
 
-            Expanded(
-              child: FutureBuilder(
-                future: getproduct(),
-                builder: (ctx, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return Center(child: Text('No data found'));
+                }
 
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  }
+                List products = snapshot.data!;
 
-                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(
-                      child: Text('No products found'),
-                    );
-                  }
-
-                  return GridView.builder(
+                return Expanded(
+                  child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (_, index) {
-                      final data = snapshot.data![index];
-                      return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProductsDetails()));
-                          },
-                          child: Text(data.productName.toString()));
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return Text(products[index].productDetails.toString());
                     },
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             )
-            // StreamBuilder(
-            //     stream: FirebaseFirestore.instance
-            //         .collection("products")
-            //         .snapshots(),
-            //     builder: ((context, snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.waiting) {
-            //         return Center(child: CircularProgressIndicator());
-            //       }
-            //       return GridView.builder(
-            //           gridDelegate:
-            //               const SliverGridDelegateWithFixedCrossAxisCount(
-            //                   crossAxisCount: 2),
-            //           itemCount: snapshot.data!.docs.length,
-            //           itemBuilder: (_, index) {
-            //             final data = snapshot.data!.docs[index];
-            //             return Image.network(data["image"]);
-            //           });
-            //     }))
+            // Expanded(
+            //   child: GridView.builder(
+            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //       crossAxisCount: 2,
+            //     ),
+            //     //  itemCount: 10, // Assuming you have 10 items, adjust accordingly
+            //     itemBuilder: (context, index) {
+            //       return Text("hello");
 
-            // SizedBox(
-            //   height: layout.width * 0.13,
-            //   child: BlocBuilder<BrandBloc, BrandState>(
-            //     builder: (context, state) {
-            //       if (state is BrandFetchSuccess) {
-            //         return ListView.builder(
-            //           scrollDirection: Axis.horizontal,
-            //           itemBuilder: (context, index) {
-            //             return BrandCard(
-            //                 brandTitle: state.brands.length.toString(),
-            //                 brandLogo: state.brands.length.toString());
-            //             // if (index == 0) {
-            //             //   return const Gap(10);
-            //             // }
-            //             // return BrandCard(
-            //             //   brandLogo: state.brands[index - 1].brandLogo,
-            //             //   brandTitle: state.brands[index - 1].brandName,
-            //             // );
-            //           },
-            //           // separatorBuilder: (context, index) => const Gap(8.0),
-            //           // itemCount: state.brands.length + 1,
-            //         );
-            //       } else
-            //         (e) {
-            //           return Text(state.toString());
-            //           // return ListView.separated(
-            //           //   scrollDirection: Axis.horizontal,
-            //           //   itemBuilder: (context, index) =>
-            //           //       ShimmerEffect.rectangular(
-            //           //           width: 70, height: layout.width * 0.13),
-            //           //   separatorBuilder: (context, index) => const Gap(8.0),
-            //           //   itemCount: 2,
-            //           // );
-            //         };
             //     },
             //   ),
-            // ),
+            // )
           ],
         ),
       ),
