@@ -14,10 +14,41 @@ class DetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Products Details"),
       ),
-      body: Column(
-        children: [
-          Image.network(passdata["product_name"]),
-        ],
+      body: Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Image.network(
+                passdata["product_name"],
+                height: 150,
+                fit: BoxFit.fill,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Product Price",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  Text(passdata["product_price"].toString(),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold))
+                ],
+              ),
+
+              // Text(
+              //   "Product Price  ${passdata["product_price"].toString()}",
+              //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              // ),
+              //FittedBox(),
+              ListTile(
+                title: Text(passdata["product_details"]),
+                //leading: Text(passdata["product_details"]),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
