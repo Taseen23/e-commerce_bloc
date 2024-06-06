@@ -26,7 +26,7 @@ Future<List<ProductModel>?> getproduct() async {
   final List<ProductModel> products = [];
   // final data = await FirebaseFirestore.instance.collection('products').get();
   try {
-    final data = await FirebaseFirestore.instance.collection('products').get();
+    final data = await FirebaseFirestore.instance.collection('shirts').get();
     for (var product in data.docs) {
       products.add(ProductModel.fromJson(product.data()));
     }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
 import 'package:e_commerce_bloc/src/data/repository/proudctrepo2.dart';
+import 'package:e_commerce_bloc/src/presentation/Screens/DetailsScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/Sreens.dart';
 
 import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
@@ -24,6 +25,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     ProductRepository obj = ProductRepository();
     final layout = MediaQuery.of(context).size;
     final theme = Theme.of(context);
@@ -80,15 +82,17 @@ class HomeScreen extends StatelessWidget {
                         ?.copyWith(fontWeight: FontWeight.w600),
                   ),
                   Text(
-                    'Filter',
+                    'Filters',
                     style: theme.textTheme.labelSmall,
                   )
                 ],
               ),
             ),
             const Gap(10),
-            FutureBuilder(
-              future: obj.fetchProducts(),
+
+            StreamBuilder(
+              stream:
+                  FirebaseFirestore.instance.collection("products").snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -101,35 +105,79 @@ class HomeScreen extends StatelessWidget {
                 if (!snapshot.hasData || snapshot.data == null) {
                   return Center(child: Text('No data found'));
                 }
-
-                List products = snapshot.data!;
-
                 return Expanded(
                   child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ),
-                    itemCount: products.length,
+                    itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
-                      return Text(products[index].productDetails.toString());
+                      final pro = snapshot.data!.docs[index];
+                      return Card(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: ((context) {
+                                return DetailsScreen(passdata: pro.data());
+                              })));
+                            },
+                            child: Image.network(
+                              pro['product_name'].toString(),
+                            )),
+                      );
+                      // Text(pro['product_name'].toString());
                     },
                   ),
                 );
               },
             )
-            // Expanded(
-            //   child: GridView.builder(
-            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //       crossAxisCount: 2,
-            //     ),
-            //     //  itemCount: 10, // Assuming you have 10 items, adjust accordingly
-            //     itemBuilder: (context, index) {
-            //       return Text("hello");
 
-            //     },
-            //   ),
+            // FutureBuilder(
+            //   future: getproduct(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return Center(child: CircularProgressIndicator());
+            //     }
+
+            //     if (snapshot.hasError) {
+            //       return Center(child: Text('Error: ${snapshot.error}'));
+            //     }
+
+            //     if (!snapshot.hasData || snapshot.data == null) {
+            //       return Center(child: Text('No data found'));
+            //     }
+
+            //     List products = snapshot.data!;
+            //     print(products);
+
+            //     return Expanded(
+            //       child: GridView.builder(
+            //         gridDelegate:
+            //             const SliverGridDelegateWithFixedCrossAxisCount(
+            //           crossAxisCount: 2,
+            //         ),
+            //         itemCount: products.length,
+            //         itemBuilder: (context, index) {
+            //           final pro = snapshot.data![index];
+            //           return Text(pro.productName.toString());
+            //         },
+            //       ),
+            //     );
+            //   },
             // )
+            // // Expanded(
+            // //   child: GridView.builder(
+            // //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // //       crossAxisCount: 2,
+            // //     ),
+            // //     //  itemCount: 10, // Assuming you have 10 items, adjust accordingly
+            // //     itemBuilder: (context, index) {
+            // //       return Text("hello");
+
+            // //     },
+            // //   ),
+            // // )
           ],
         ),
       ),

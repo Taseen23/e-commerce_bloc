@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_commerce_bloc/src/presentation/Screens/LoginScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/SignUpScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/SplashScreen.dart';
