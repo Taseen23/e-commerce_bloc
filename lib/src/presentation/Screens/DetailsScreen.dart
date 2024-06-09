@@ -16,7 +16,7 @@ class DetailsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Image.network(passdata["product_name"]),
+          Image.network(passdata["brands"].toString(), fit: BoxFit.fill),
         ],
       ),
     );

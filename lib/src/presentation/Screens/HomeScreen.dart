@@ -15,10 +15,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../blocs/store/product_bloc.dart';
 import '../../data/preference/local_preferences.dart';
 import '../../data/repository/productrepository.dart';
 import '../../utlls/values.dart';
 import '../widgets/Search_bar.dart';
+import '../widgets/card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,7 +28,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    ProductRepository obj = ProductRepository();
+    //ProductRepository obj = ProductRepository();
     final layout = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
@@ -89,6 +91,69 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const Gap(10),
+            // Expanded(
+            //   child: CustomScrollView(
+            //   physics: const BouncingScrollPhysics(),
+            //   slivers: [
+            //       const SliverToBoxAdapter(
+            //       child: Gap(20),
+            //       ),
+            //       SliverToBoxAdapter(
+            //       child: ListTile(
+            //       title: const Text('New Arraival'),
+            //       titleTextStyle: theme.textTheme.titleMedium
+            //           ?.copyWith(fontWeight: FontWeight.w600),
+            //       trailing: Text(
+            //       'View All',
+            //       style: theme.textTheme.labelSmall,
+            //       ),
+            //       ),
+            //       ),
+            //     SliverPadding(
+            //       padding: const EdgeInsets.all(8.0),
+            //       sliver: BlocBuilder<ProductBloc, ProductState>(
+            //         builder: (context, state) {
+            //           if (state is ProductFetchSuccess) {
+            //             return SliverGrid(
+            //               delegate: SliverChildBuilderDelegate(
+            //                     (context, index) => ProductCard(
+            //                   onItemTap: () {
+            //                     context.read<ProductBloc>().add(FetchSingleProduct(state.products[index].productId));
+            //                     // context.read<CategoryBloc>().add(FetchSingleCategory(state.products[index].categoryId ?? ''));
+            //                     // context.pushNamed(Routes.PRODUCT_DETAILS_ROUTE);
+            //                   },
+            //                   productName: state.products[index].productName ?? 'Unknown',
+            //                   productPrice: state.products[index].productPrice,
+            //                   productThumbnail: state.products[index].imageGallery?.first.url,
+            //                 ),
+            //                 childCount: state.products.length,
+            //               ),
+            //               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //                 crossAxisCount: 2,
+            //                 mainAxisSpacing: 8,
+            //                 crossAxisSpacing: 8,
+            //                 mainAxisExtent: layout.width * 0.7,
+            //               ),
+            //             );
+            //           } else {
+            //             return SliverToBoxAdapter(
+            //               child: Center(
+            //                   child: Text("error")
+            //                 // child: LoadingAnimationWidget.hexagonDots(
+            //                 //     color: theme.colorScheme.primary, size: 35.w),
+            //               ),
+            //             );
+            //           }
+            //         },
+            //       ),
+            //     )
+            //       ]
+            //   ),
+            // )
+
+
+
+
 
             StreamBuilder(
               stream:
@@ -114,17 +179,53 @@ class HomeScreen extends StatelessWidget {
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       final pro = snapshot.data!.docs[index];
-                      return Card(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: ((context) {
-                                return DetailsScreen(passdata: pro.data());
-                              })));
-                            },
-                            child: Image.network(
-                              pro['product_name'].toString(),
-                            )),
+
+                      print(pro["product_details"]);
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: ((context) {
+                            return DetailsScreen(passdata: pro.data());
+                          })));
+                        },
+                        child:
+                        Column(
+                          children: [
+                            Expanded(
+                              child: Image.network(
+                                pro['brand'].toString(),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(pro["product_name"]),
+                                Text(pro["product_price"].toString())
+                              ],
+                            )
+
+                          ],
+                        )
+
+                        //Text(pro['product_details']),
+                        // Column(
+                        //   children: [
+                        //     for (var detail in productDetails)
+                        //       Column(
+                        //         children: [
+                        //           Image.network(
+                        //             detail['url'].toString(),
+                        //           )
+                        //           // Text(detail['name']), // Replace 'name' with actual keys
+                        //           // Text(detail['value'].toString()), // Replace 'value' with actual keys
+                        //         ],
+                        //       ),
+                        //   ],
+                        // ),
+                        // Text(pro['product_details']),
+                        // Image.network(
+                        //   pro['product_details']['url'].toString(),
+                        // )
                       );
                       // Text(pro['product_name'].toString());
                     },

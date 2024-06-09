@@ -3,7 +3,9 @@ import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/register_bloc.dart
 import 'package:e_commerce_bloc/src/blocs/Profile/bloc/profile_bloc.dart';
 import 'package:e_commerce_bloc/src/blocs/cubit/remember_switch_cubit.dart';
 import 'package:e_commerce_bloc/src/blocs/cubit/splash_cubit.dart';
+import 'package:e_commerce_bloc/src/blocs/store/product_bloc.dart';
 import 'package:e_commerce_bloc/src/data/repository/authrepository.dart';
+import 'package:e_commerce_bloc/src/data/repository/productrepository.dart';
 import 'package:e_commerce_bloc/src/routes/route_page.dart';
 import 'package:e_commerce_bloc/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,8 @@ class EcommerceApp extends StatelessWidget {
     return MultiRepositoryProvider(
         providers: [
           RepositoryProvider(create: ((context) => AuthRepository())),
-          RepositoryProvider(create: ((context) => StoreRepository()))
+          RepositoryProvider(create: ((context) => StoreRepository())),
+          RepositoryProvider(create: (context)=> ProductRepository())
         ],
         child: MultiBlocProvider(
             providers: [
@@ -37,6 +40,9 @@ class EcommerceApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => LoginBloc(context.read<AuthRepository>()),
               ),
+              BlocProvider(
+                create: (context) => ProductBloc(context.read<ProductRepository>())..add(FetchProduct())),
+
             ],
             child: ScreenUtilInit(
               designSize: const Size(360, 690),

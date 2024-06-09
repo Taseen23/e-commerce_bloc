@@ -1,52 +1,40 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_bloc/src/data/models/products_model.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../dummy/dummyproducts.dart';
-import '../models/products2.dart';
-import '../models/products3.dart';
-
+import '../models/products_model.dart';
 class ProductRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Future<void> createNewProducts() async {
-    try {
-      for (var brand in dummyproducts) {
-        await _firestore.collection('products').add(brand.toJson());
-      }
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
 
-  final List<ProModel> products = [];
-  Future<List<ProModel>> fetchProducts() async {
+  Future<List<ProductModel>> fetchProduct() async {
+    final List<ProductModel> products = [];
     try {
       final data = await _firestore.collection('products').get();
       for (var product in data.docs) {
-        products.add(ProModel.fromJson(product.data()));
+        final singleProduct = ProductModel.fromJson(product.data());
+        singleProduct.productId = product.id;
+        products.add(singleProduct);
       }
       return products;
     } catch (e) {
+      debugPrint('Error: $e');
       throw Exception(e);
     }
   }
-
-  Stream<List<ProModel>> getDataStream() async* {
+  Future<ProductModel?> fetchSingleProduct(String productId) async {
     try {
-      final data = await _firestore.collection('products').get();
-      for (var product in data.docs) {
-        products.add(ProModel.fromJson(product.data()));
+      final data = await _firestore.collection('products').doc(productId).get();
+
+      if(data.data() != null){
+        final product = ProductModel.fromJson(data.data()!);
+        product.productId = data.id;
+        return product;
+      } else {
+        return null;
       }
-      yield products;
+
     } catch (e) {
+      debugPrint('Error: $e');
       throw Exception(e);
     }
-    // FirebaseFirestore.instance.collection("products").snapshots();
-    // Simulate some async data fetching
-    // await Future.delayed(Duration(seconds: 1));
-    // yield ['Item 1', 'Item 2', 'Item 3'];
-    // await Future.delayed(Duration(seconds: 2));
-    // yield ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
   }
 }
