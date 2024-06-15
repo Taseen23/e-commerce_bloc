@@ -7,10 +7,10 @@ part 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(SplashInitial());
-  ProductRepository repository = ProductRepository();
+  //ProductRepository repository = ProductRepository();
 
   Future<void> startSplash() async {
-    await repository.createNewProducts();
+    //await repository.createNewProducts();
     Future.delayed(const Duration(seconds: 2), () {
       emit(SplashEnd());
     });

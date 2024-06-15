@@ -91,47 +91,52 @@ class HomeScreen extends StatelessWidget {
             const Gap(10),
 
             StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection("products").snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
+                stream: FirebaseFirestore.instance
+                    .collection("products")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                }
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  }
 
-                if (!snapshot.hasData || snapshot.data == null) {
-                  return Center(child: Text('No data found'));
-                }
-                return Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      final pro = snapshot.data!.docs[index];
-                      return Card(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: ((context) {
-                                return DetailsScreen(passdata: pro.data());
-                              })));
-                            },
-                            child: Image.network(
-                              pro['product_name'].toString(),
-                            )),
-                      );
-                      // Text(pro['product_name'].toString());
-                    },
-                  ),
-                );
-              },
-            )
+                  if (!snapshot.hasData || snapshot.data == null) {
+                    return Center(child: Text('No data found'));
+                  }
+                  return Expanded(
+                      child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                          ),
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            final pro = snapshot.data!.docs[index];
+
+                            print(pro["product_details"]);
+                            return InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: ((context) {
+                                    return DetailsScreen(passdata: pro.data());
+                                  })));
+                                },
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Image.network(
+                                        pro['brand'].toString(),
+                                      ),
+                                    ),
+                                    Text(pro["product_name"]),
+                                    Text(pro["product_price"].toString())
+                                  ],
+                                ));
+                          }));
+                }),
 
             // FutureBuilder(
             //   future: getproduct(),
