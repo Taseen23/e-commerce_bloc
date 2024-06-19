@@ -10,6 +10,7 @@ class ProductsDetails extends StatelessWidget {
       appBar: AppBar(
         title: Text("Products Details"),
       ),
+      body: Expanded(child: Text("do it ")),
     );
   }
 }
