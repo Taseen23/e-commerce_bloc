@@ -2,4 +2,4 @@ export 'HomeScreen.dart';
 export 'LoginScreen.dart';
 export 'SignUpScreen.dart';
 export 'SplashScreen.dart';
-export 'ProductDetailsScreen.dart';
+export 'DetailsScreen.dart';

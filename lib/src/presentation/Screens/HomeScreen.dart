@@ -131,8 +131,23 @@ class HomeScreen extends StatelessWidget {
                                         pro['brand'].toString(),
                                       ),
                                     ),
-                                    Text(pro["product_name"]),
-                                    Text(pro["product_price"].toString())
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(pro["product_name"]),
+                                        Text(
+                                          "\$" +
+                                              pro["product_price"].toString(),
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        //Text(pro['price'].toString())
+                                      ],
+                                    )
                                   ],
                                 ));
                           }));
