@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_bloc/src/blocs/Authentication/bloc/login_bloc.dart';
-import 'package:e_commerce_bloc/src/data/repository/proudctrepo2.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/DetailsScreen.dart';
 import 'package:e_commerce_bloc/src/presentation/Screens/Sreens.dart';
 
 import 'package:e_commerce_bloc/src/presentation/widgets/widgets.dart';
 import 'package:e_commerce_bloc/src/routes/route_page.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,7 +15,6 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/preference/local_preferences.dart';
-import '../../data/repository/productrepository.dart';
 import '../../utlls/values.dart';
 import '../widgets/Search_bar.dart';
 
@@ -25,12 +23,21 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    ProductRepository obj = ProductRepository();
-    final layout = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
+        // title: const Text("eccommerce"),
+        // titleSpacing: 00.0,
+        // centerTitle: true,
+        // toolbarHeight: 60.2,
+        // toolbarOpacity: 0.8,
+        // shape: const RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.only(
+        //       bottomRight: Radius.circular(25),
+        //       bottomLeft: Radius.circular(25)),
+        // ),
+        // elevation: 0.00,
+        // backgroundColor: Color.fromARGB(255, 12, 188, 241),
         actions: [
           BlocListener<LoginBloc, LoginState>(
             listener: (context, state) {
@@ -40,8 +47,6 @@ class HomeScreen extends StatelessWidget {
               if (state is LogOutFailed) {
                 Fluttertoast.showToast(msg: state.massage);
               }
-
-              // TODO: implement listener
             },
             child: IconButton.filled(
               style: ButtonStyle(
@@ -53,6 +58,11 @@ class HomeScreen extends StatelessWidget {
             ),
           )
         ],
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          //  tooltip: 'Menu Icon',
+          onPressed: () {},
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -118,38 +128,37 @@ class HomeScreen extends StatelessWidget {
 
                             print(pro["product_details"]);
                             return InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: ((context) {
-                                    return DetailsScreen(passdata: pro.data());
-                                  })));
-                                },
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Image.network(
-                                        pro['brand'].toString(),
-                                      ),
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: ((context) {
+                                  return DetailsScreen(passdata: pro.data());
+                                })));
+                              },
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Image.network(
+                                      pro['brand'].toString(),
                                     ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(pro["product_name"]),
-                                        Text(
-                                          "\$" +
-                                              pro["product_price"].toString(),
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        //Text(pro['price'].toString())
-                                      ],
-                                    )
-                                  ],
-                                ));
+                                  ),
+                                  Column(
+                                    //   mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(pro["product_name"]),
+                                      Text(
+                                        "\$" + pro["product_price"].toString(),
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      //Text(pro['price'].toString())
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
                           }));
                 }),
 
