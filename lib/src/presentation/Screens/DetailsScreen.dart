@@ -15,7 +15,7 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Products Details"),
+        actions: [Container(width: 50, child: Icon(Icons.shopping_cart_sharp))],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
