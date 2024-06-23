@@ -33,13 +33,14 @@ class CustomSearchBar extends StatelessWidget {
             ),
           ),
           const Gap(8.0),
-          FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: theme.colorScheme.primary,
-            child: Center(
-                //  child: SvgPicture.asset(AssetManager.MIC_ICON),
-                ),
-          )
+          // FloatingActionButton(
+          //   onPressed: () {},
+          //   backgroundColor: theme.colorScheme.primary,
+          //   child: Center(
+
+          //       //  child: SvgPicture.asset(AssetManager.MIC_ICON),
+          //       ),
+          // )
         ],
       ),
     );
