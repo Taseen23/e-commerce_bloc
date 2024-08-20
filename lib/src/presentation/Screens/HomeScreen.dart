@@ -79,7 +79,8 @@ class HomeScreen extends StatelessWidget {
               subtitle: const Text(Values.WELCOME_SUB_TITLE),
               subtitleTextStyle: Theme.of(context).textTheme.labelMedium,
             ),
-            const CustomSearchBar(),
+            // const CustomSearchBar(),
+            Expanded(child: CustomSeach()),
             const Gap(20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -99,6 +100,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const Gap(10),
+            // CustomSeach(),
 
             StreamBuilder(
                 stream: FirebaseFirestore.instance
@@ -126,7 +128,6 @@ class HomeScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final pro = snapshot.data!.docs[index];
 
-                            print(pro["product_details"]);
                             return InkWell(
                               onTap: () {
                                 Navigator.push(context,
